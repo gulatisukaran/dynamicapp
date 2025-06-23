@@ -42,7 +42,7 @@ export default function Home() {
         }
     ];
 
-    const [myJsonArray, setMyJsonArray] = useState(flatJsonUI);
+    const [myJsonArray, setMyJsonArray] = useState<FlatNode[]>(flatJsonUI as FlatNode[]);
 
     const componentMap = {
         input: (props: any) => <input {...props} />,
@@ -120,7 +120,7 @@ export default function Home() {
           const data = await response.json();
 
           setLoading(false);
-          setMyJsonArray(data);
+          setMyJsonArray(data as FlatNode[]);
           console.log(data);
 
         } catch (error) {

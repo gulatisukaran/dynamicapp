@@ -16,3 +16,7 @@ Dynamic app is a Next.js based web application that allows the user to generate 
 ```
 npm run dev
 ```
+This will start the project locally.
+
+You need to add the open ai api key in the .env.local file
+
