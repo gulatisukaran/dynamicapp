@@ -134,7 +134,7 @@ Only return the JSON array of this format. Do not include any explanations or su
     const schema = JSON.parse(content || "{}");
     return NextResponse.json(schema)
   } catch (error) {
-    return NextResponse.json({ error: "Invalid JSON response from OpenAI" }, { status: 500 });
+    return NextResponse.json({ error: `${error}` }, { status: 500 });
   }
 }
 
