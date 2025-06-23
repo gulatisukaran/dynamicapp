@@ -1,5 +1,6 @@
 'use client'
 
+import "wired-elements";
 import { useState } from "react";
 
 export default function Home() {
@@ -105,36 +106,21 @@ export default function Home() {
     const handleClick = async () => {
         if (!query.trim()) return alert("Please enter a query!");
 
-        try {
-          setLoading(true);
+        const response = await fetch('/api/schema_generator', {
+            method: 'POST',
+            body: JSON.stringify({ query })
+        });
 
-          const response = await fetch('/api/schema_generator', {
-              method: 'POST',
-              body: JSON.stringify({ query })
-          });
+        setLoading(true);
+        const data = await response.json();
+        setMyJsonArray(data);
+        console.log(data);
+    }
 
-          if(!response.ok){
-            throw new Error(`Server Error: ${response.status}`);
-          }
-
-          const data = await response.json();
-
-          setLoading(false);
-          setMyJsonArray(data);
-          console.log(data);
-
-        } catch (error) {
-            console.error(`Error fetching UI: ${error}`);
-            alert("Something went wrong while generating the UI.");
-        } finally {
-          setLoading(false);
-        }
-
-      }
-        
   return (
     <>
-    <div className="flex flex-col justify-center mt-10">
+    <div className="flex justify-center mt-10">
+
         <textarea 
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -142,24 +128,18 @@ export default function Home() {
             placeholder="e.g., I want a meal logging dashboard with charts and a form to log food"
         />
         <button 
-            className="border border-white text-white text-2xl m-2 p-3 rounded-md bg-blue-600 cursor-pointer" 
+            className="border border-white text-white text-2xl m-2 p-3 rounded-md " 
             onClick={handleClick}>
                 Generate App
         </button>
-    </div>
 
-    {
-      loading? (
-        <div className="flex justify-center mt-10">
-          <p className="text-white text-2xl m-2 p-2"> You app is loading</p>
-        </div>
-      ): (
-        <div className="p-4">
-          <h2 className="text-lg font-bold mb-4 mt-10 text-center">---------- generated application -----------</h2>
-          {renderFlatUI(myJsonArray)}
-        </div>
-      )
-    }
+
+    </div>
+    
+    <div className="p-4">
+      <h2 className="text-lg font-bold mb-4">---------- generated application -----------</h2>
+      {renderFlatUI(myJsonArray)}
+    </div>
     </>
   )
 }
