@@ -151,7 +151,7 @@ export default function Home() {
     {
       loading? (
         <div className="flex justify-center mt-10">
-          <p className="text-white text-2xl m-2 p-2"> You app is loading</p>
+          <p className="text-white text-2xl m-2 p-2"> Your app is loading</p>
         </div>
       ): (
         <div className="p-4">
